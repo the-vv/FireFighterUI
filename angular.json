@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "FireUI"
+    }
+  },
+  "defaultProject": "FireUI",
+  "cli": {
+    "analytics": false
+  }
 }

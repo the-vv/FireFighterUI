@@ -1,1 +1,133 @@
 /* You can add global styles to this file, and also import other style files */
+#home {
+    height: 100vh;
+}
+
+#left-fhalf {
+    height: 50vh;
+}
+
+#left-shalf {
+    height: 50vh;
+}
+
+#right-fhalf {
+    height             : 50vh;
+    background         : url("assets/videon.jpg");
+    background-size    : cover;
+    background-position: center;
+    background-repeat  : no-repeat;
+}
+
+#right-shalf {
+    height: 50vh;
+}
+
+#right-bottom-left {
+    position: relative;
+}
+
+#command-input {
+    position: absolute;
+    bottom  : 0;
+}
+
+#map {
+    background         : url("assets/map.jpg");
+    background-size    : cover;
+    background-position: center;
+    background-repeat  : no-repeat;
+}
+
+.switch {
+    position: relative;
+    display : inline-block;
+    width   : 40px;
+    height  : 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width  : 0;
+    height : 0;
+}
+
+.slider {
+    position          : absolute;
+    cursor            : pointer;
+    top               : 0;
+    left              : 0;
+    right             : 0;
+    bottom            : 0;
+    background-color  : #ccc;
+    -webkit-transition: .4s;
+    transition        : .4s;
+}
+
+.slider:before {
+    position          : absolute;
+    content           : "";
+    height            : 16px;
+    width             : 16px;
+    left              : 4px;
+    bottom            : 4px;
+    background-color  : white;
+    -webkit-transition: .4s;
+    transition        : .4s;
+}
+
+input:checked+.slider {
+    background-color: #2196F3;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(16px);
+    -ms-transform    : translateX(16px);
+    transform        : translateX(16px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 15px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+@media(max-width:576px) {
+    #right-shalf {
+        height: 100vh;
+    }
+
+    #right-bottom-left {
+        height: 50vh !important;
+    }
+
+    #terminal-display {
+        height: 80.51% !important;
+    }
+}
+
+#right-map {
+    max-height: calc(50vh - 2px) !important;
+    overflow  : hidden;
+}
+
+iframe {
+    height: calc(46vh - 3px);
+}
+
+#terminal-display {
+    font-family: monospace;
+    height     : 82%;
+    overflow   : auto;
+}
+
+#right-bottom-left {
+    max-height: 50vh;
+}
