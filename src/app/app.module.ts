@@ -12,6 +12,7 @@ import { VideoComponent } from './video/video.component';
 import { MapComponent } from './map/map.component';
 import { ServerService } from './server.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +25,7 @@ import { ServerService } from './server.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     ServerService
