@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ServerService } from '../server.service'
 
 @Component({
   selector: 'app-status',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StatusComponent implements OnInit {
 
-  constructor() { }
+  currentDate: Date
+
+  constructor(
+    public server: ServerService
+  ) { }
 
   ngOnInit(): void {
+    setInterval(() => {
+      this.currentDate = new Date();      
+    }, 1000);
   }
 
 }
