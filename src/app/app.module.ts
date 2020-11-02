@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { HttpClientModule } from '@angular/common/http';
 
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StatusComponent } from './status/status.component';
@@ -12,7 +15,8 @@ import { VideoComponent } from './video/video.component';
 import { MapComponent } from './map/map.component';
 import { ServerService } from './server.service';
 
-
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +30,7 @@ import { ServerService } from './server.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [
     ServerService
