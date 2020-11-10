@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-12">
             <div class="row">
-                <iframe *ngIf="socketService.videoUrl?.length" class="col-md-8 p-0 m-0 mx-auto" [src]="socketService.videoUrl"
+                <iframe *ngIf="socketService.videoUrl?.length" class="col-md-8 p-0 m-0 mx-auto" [src]="socketService.videoUrl | safe"
                     frameborder="0" [ngClass]="{'bg-image': socketService.videoUrl?.length < 1}"></iframe>
             </div>
         </div>

@@ -14,7 +14,7 @@ import { TerminalComponent } from './terminal/terminal.component';
 import { VideoComponent } from './video/video.component';
 import { MapComponent } from './map/map.component';
 import { ServerService } from './server.service';
-// import { SafePipe } from './safepipe'
+import { SafePipe } from './safepipe'
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
  
@@ -26,6 +26,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     TerminalComponent,
     VideoComponent,
     MapComponent,
+    SafePipe
   ],
   imports: [
     BrowserModule,
