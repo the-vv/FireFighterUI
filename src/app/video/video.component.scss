@@ -4,3 +4,10 @@
 iframe{
     height: 46vh;
 }
+
+.bg-image{
+    background-image: url('../../assets/videoLoad.gif');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}

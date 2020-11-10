@@ -7,8 +7,8 @@
     <div class="row">
         <div class="col-12">
             <div class="row">
-                <!-- <iframe class="col-12 p-0 m-0" src="https://app.pm2.io/bucket/5f9958095d2607c1f0d8f038/backend/overview/servers"
-                    frameborder="0"></iframe> -->
+                <iframe *ngIf="socketService.videoUrl?.length" class="col-md-8 p-0 m-0 mx-auto" [src]="socketService.videoUrl"
+                    frameborder="0" [ngClass]="{'bg-image': socketService.videoUrl?.length < 1}"></iframe>
             </div>
         </div>
     </div>
