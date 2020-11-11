@@ -11,6 +11,7 @@ export class ServerService {
   terminalLog: string = '';
   videoUrl = '';
   statusUrl = '';
+  location: any
 
   constructor(
     private socket: Socket
@@ -18,6 +19,10 @@ export class ServerService {
     socket.on('connect', () => {
       console.log('connected'); // true
     });
+    socket.on('piLocation', (location) =>{
+      console.log(location);      
+      this.location = location;
+    })
     socket.on('disconnect', () => {
       
       console.log('Disconnected'); // false

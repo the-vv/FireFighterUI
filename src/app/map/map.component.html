@@ -1,11 +1,15 @@
 <div class="row">
     <div class="col-12">
-        <div class="row bg-primary text-white p-1 rounded-top">Location</div>
+        <div class="row bg-primary text-white p-1 rounded-top">IP Location</div>
     </div>
 </div>
 <div class="row">
-    <iframe
-        src="https://maps.google.com/maps?hl=en&q=thodupuzha&t=k&z=17&ie=UTF8&iwloc=B&output=embed"
+    <iframe *ngIf="socketServer.location == null"
+        src="https://maps.google.com/maps?hl=en&q=thodupuzha&t=k&z=17&ie=UTF8&iwloc=B&output=embed" width=100%
+        frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" class="map">
+    </iframe>
+    <iframe *ngIf="socketServer.location != null"
+        [src]="'https://maps.google.com/maps?hl=en&q=' + socketServer.location.latitude + ',' + socketServer.location.longitude + '&t=k&z=17&ie=UTF8&iwloc=B&output=embed' | safe"
         width=100% frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" class="map">
     </iframe>
 </div>

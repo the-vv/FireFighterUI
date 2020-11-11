@@ -1,63 +1,65 @@
-<div class="col-12 ">
-    <div class="row bg-primary text-white p-1 rounded-top">
+<div class="col-12">
+    <div class="row bg-primary text-white p-1 mb-2 rounded-top">
         Manual Controls
     </div>
-    <div class="col-12">
-        <div class="row">
-            <div class="col-12 text-center my-1">
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="manualMode"
-                        (change)="triggerManual()">
-                    <label class="custom-control-label" for="customSwitch1" style="cursor: pointer;">Trigger
-                        Manual</label>
+    <div class="row d-flex align-content-center">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 text-center my-1">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="manualMode"
+                            (change)="triggerManual()">
+                        <label class="custom-control-label" for="customSwitch1" style="cursor: pointer;">Trigger
+                            Manual</label>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-12">
-        <div class="row">
-            <div class="col-12 text-center my-3">
-                <button class="rounded-pill col-3 btn btn-success" (mousedown)="onControl('forward', true)"
-                    (mouseup)="onControl('forward', false)" [ngClass]="{'active': buttonActive == 'forward'}">
-                    <i class="fas fa-lg fa-chevron-up"></i>
-                </button>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 text-center my-3">
+                    <button class="rounded-pill col-3 btn btn-success" (mousedown)="onControl('forward', true)"
+                        (mouseup)="onControl('forward', false)" [ngClass]="{'active': buttonActive == 'forward'}">
+                        <i class="fas fa-lg fa-chevron-up"></i>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-12">
-        <div class="row">
-            <div class="col-12 text-center">
-                <button class="rounded-pill col-3 btn btn-success" (mousedown)="onControl('left', true)"
-                    (mouseup)="onControl('left', false)" [ngClass]="{'active': buttonActive == 'left'}">
-                    <i class="fas fa-lg fa-chevron-left"></i>
-                </button>
-                <button class="rounded-pill col-3 btn btn-success mx-2">
-                    <i class="far fa-circle"></i>
-                </button>
-                <button class="rounded-pill col-3 btn btn-success" (mousedown)="onControl('right', true)"
-                    (mouseup)="onControl('right', false)" [ngClass]="{'active': buttonActive == 'right'}">
-                    <i class="fas fa-lg fa-chevron-right"></i>
-                </button>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button class="rounded-pill col-3 btn btn-success" (mousedown)="onControl('left', true)"
+                        (mouseup)="onControl('left', false)" [ngClass]="{'active': buttonActive == 'left'}">
+                        <i class="fas fa-lg fa-chevron-left"></i>
+                    </button>
+                    <span class="rounded-pill col-3 bg-dark mx-2">
+                        <i class="far fa-circle"></i>
+                    </span>
+                    <button class="rounded-pill col-3 btn btn-success" (mousedown)="onControl('right', true)"
+                        (mouseup)="onControl('right', false)" [ngClass]="{'active': buttonActive == 'right'}">
+                        <i class="fas fa-lg fa-chevron-right"></i>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-12">
-        <div class="row">
-            <div class="col-12 text-center my-3">
-                <button class="rounded-pill col-3 btn btn-success" (mousedown)="onControl('back', true)"
-                    (mouseup)="onControl('back', false)" [ngClass]="{'active': buttonActive == 'back'}">
-                    <i class="fas fa-lg fa-chevron-down"></i>
-                </button>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 text-center my-3">
+                    <button class="rounded-pill col-3 btn btn-success" (mousedown)="onControl('back', true)"
+                        (mouseup)="onControl('back', false)" [ngClass]="{'active': buttonActive == 'back'}">
+                        <i class="fas fa-lg fa-chevron-down"></i>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-12">
-        <div class="row">
-            <div class="px-5 col-12 text-center my-2">
-                <button class=" mx-auto col btn btn-danger" (mousedown)="onControl('ext', true)"
-                    (mouseup)="onControl('ext', false)" [ngClass]="{'active': buttonActive == 'ext'}">
-                    Extinguish
-                </button>
+        <div class="col-12">
+            <div class="row">
+                <div class="px-5 col-12 text-center my-2">
+                    <button class=" mx-auto col btn btn-danger" (mousedown)="onControl('ext', true)"
+                        (mouseup)="onControl('ext', false)" [ngClass]="{'active': buttonActive == 'ext'}">
+                        Extinguish
+                    </button>
+                </div>
             </div>
         </div>
     </div>

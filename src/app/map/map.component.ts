@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ServerService } from '../server.service'
 
 @Component({
   selector: 'app-map',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MapComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public socketServer: ServerService
+  ) { }
 
   ngOnInit(): void {
   }
 
 }
+ 
