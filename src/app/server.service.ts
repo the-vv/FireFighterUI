@@ -18,6 +18,7 @@ export class ServerService {
       console.log('connected'); // true
     });
     socket.on('disconnect', () => {
+      
       console.log('Disconnected'); // false
       // location.href = 'https://firefighteronline.herokuapp.com'
     });
@@ -44,6 +45,11 @@ export class ServerService {
         // location.href = 'https://firefighteronline.herokuapp.com'
       }
     })
+  }
+
+  sendNav(command: any){
+    console.log(command);
+    this.socket.emit('manualCOmmand', command);    
   }
 
   sendCommand(data: string){    

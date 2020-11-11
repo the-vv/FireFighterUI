@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { ServerService } from '../server.service'
 
 @Component({
   selector: 'app-manual',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManualComponent implements OnInit {
 
-  constructor() { }
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) { 
+    console.log(event);    
+  }
+
+  constructor(
+    public socketServer: ServerService
+  ) { }
+
+  onControl(button, action){
+      let command = {}
+      command[button] = action
+      console.log(command);      
+  }
 
   ngOnInit(): void {
   }
-
+ 
 }

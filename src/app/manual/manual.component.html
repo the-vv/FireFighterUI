@@ -16,7 +16,8 @@
     <div class="col-12">
         <div class="row">
             <div class="col-12 text-center my-3">
-                <button class="rounded-pill col-3 btn btn-success">
+                <button class="rounded-pill col-3 btn btn-success" (mousedown)="onControl('forward', true)"
+                    (mouseup)="onControl('forward', false)">
                     <i class="fas fa-lg fa-chevron-up"></i>
                 </button>
             </div>
@@ -25,13 +26,15 @@
     <div class="col-12">
         <div class="row">
             <div class="col-12 text-center">
-                <button class="rounded-pill col-3 btn btn-success">
+                <button class="rounded-pill col-3 btn btn-success" (mousedown)="onControl('left', true)"
+                    (mouseup)="onControl('left', false)">
                     <i class="fas fa-lg fa-chevron-left"></i>
                 </button>
                 <button class="rounded-pill col-3 btn btn-success mx-2">
                     <i class="far fa-circle"></i>
                 </button>
-                <button class="rounded-pill col-3 btn btn-success">
+                <button class="rounded-pill col-3 btn btn-success" (mousedown)="onControl('right', true)"
+                    (mouseup)="onControl('right', false)">
                     <i class="fas fa-lg fa-chevron-right"></i>
                 </button>
             </div>
@@ -40,7 +43,8 @@
     <div class="col-12">
         <div class="row">
             <div class="col-12 text-center my-3">
-                <button class="rounded-pill col-3 btn btn-success">
+                <button class="rounded-pill col-3 btn btn-success" (mousedown)="onControl('back', true)"
+                    (mouseup)="onControl('back', false)">
                     <i class="fas fa-lg fa-chevron-down"></i>
                 </button>
             </div>
