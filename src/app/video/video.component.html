@@ -4,7 +4,7 @@
             <div class="row p-1">Pi Stream
                 <div class="ml-2 custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input bg-success" id="customSwitch2"
-                        [(ngModel)]="trigger">
+                        [(ngModel)]="trigger" (change)="triggerVideo()">
                     <label class="custom-control-label" for="customSwitch2" style="cursor: pointer;"> </label>
                 </div>
             </div>
@@ -13,11 +13,11 @@
     <div class="row">
         <div class="col-12">
             <div class="row">
-                <iframe *ngIf="trigger" class="col-md-8 p-0 m-0 mx-auto" [src]="socketService.videoUrl | safe"
-                    frameborder="0" [ngClass]="{'bg-image': socketService.videoUrl?.length < 1}"></iframe>
-                <div *ngIf="!trigger" class="col-md-8 p-0 m-0 mx-auto text-center pt-5"
-                    frameborder="0">
-                Video Turned Off</div>
+                <iframe *ngIf="trigger" class="p-0 m-0 mx-auto" [src]="socketService.videoUrl | safe"
+                    frameborder="0"
+                    [ngClass]="{'bg-image': socketService.videoUrl?.length == 0, 'col-12':socketService.videoUrl?.length == 0, 'col-md-8':socketService.videoUrl?.length != 0}"></iframe>
+                <iframe *ngIf="!trigger" class="col-12 p-0 m-0 mx-auto" [src]="socketService.statusUrl | safe"
+                    frameborder="0" [ngClass]="{'bg-image': socketService.statusUrl?.length < 1}"></iframe>
             </div>
         </div>
     </div>

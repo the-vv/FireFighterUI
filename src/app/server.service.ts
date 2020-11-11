@@ -9,7 +9,8 @@ export class ServerService {
 
   mainStatus: status;
   terminalLog: string = '';
-  videoUrl = ''
+  videoUrl = '';
+  statusUrl = '';
 
   constructor(
     private socket: Socket
@@ -62,6 +63,18 @@ export class ServerService {
 
   customEmit(data: any){
     this.socket.emit('customEvent', data)
+  }
+
+  getStatusUrl(){ 
+    if(this.statusUrl.length == 0){
+      this.socket.emit('statusUrl', true, (url) =>{
+        console.log(url)     
+        this.statusUrl = url 
+        return url;
+      })
+    } else{
+      return this.statusUrl;
+    }
   }
 
 }
