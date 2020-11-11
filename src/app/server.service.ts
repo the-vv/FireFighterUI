@@ -49,15 +49,19 @@ export class ServerService {
 
   sendNav(command: any){
     console.log(command);
-    this.socket.emit('manualCOmmand', command);    
+    this.socket.emit('manualCommand', command);    
   }
 
-  sendCommand(data: string){    
-    // console.log(data);    
-    this.terminalLog = this.terminalLog + '>> ' + data + '\n';
+  sendCommand(data: string, silent: boolean = false){    
+    // console.log(data);
+      this.terminalLog = this.terminalLog + '>> ' + data + '\n';
     let msgContainer = document.getElementById("terminal-display");           
     msgContainer.scrollTop = msgContainer.scrollHeight;
     this.socket.emit('newCommand', data)
+  }
+
+  customEmit(data: any){
+    this.socket.emit('customEvent', data)
   }
 
 }
