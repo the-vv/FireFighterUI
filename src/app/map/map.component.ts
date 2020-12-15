@@ -4,7 +4,13 @@ import { ServerService } from '../server.service'
 import Map from 'ol/Map';
 import View from 'ol/View';
 import VectorLayer from 'ol/layer/Vector';
-import Style from 'ol/style/Style';
+import {
+  Circle as CircleStyle,
+  Fill,
+  // Icon,
+  Stroke,
+  Style,
+} from 'ol/style';
 import Icon from 'ol/style/Icon';
 import OSM from 'ol/source/OSM';
 import * as olProj from 'ol/proj';
@@ -27,18 +33,17 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   map: any;
   ngOnInit() {
-  }
-
-  ngAfterViewInit() {
     var location = new Feature({
-      geometry: new point(olProj.fromLonLat([12.5, 41.9])),
+      geometry: new point(olProj.fromLonLat([7.0785, 51.4614])),
+      color:'blue'
     });
     var vectorSource = new VectorSource({
-      features: [],
+      features: [location],
     });
     this.map = new Map({
       target: 'hotel_map',
       layers: [
+        // vectorSource,
         new TileLayer({
           source: new OSM()
         })
@@ -51,13 +56,24 @@ export class MapComponent implements OnInit, AfterViewInit {
     var layer1 = new VectorLayer({
       source: new VectorSource({
         features: [
-          new Feature({
-            geometry: new point(olProj.fromLonLat([7.0785, 51.4614]))
-          })
+          location
         ]
-      })
+      }),
+      style: new Style({
+        image: new CircleStyle({
+          radius: 10,
+          fill: new Fill({color: 'red'}),
+          stroke: new Stroke({
+            color: 'white',
+            width: 4,
+          }),
+        }),
+      }),
     });
     this.map.addLayer(layer1);
+  }
+
+  ngAfterViewInit() {    
   }
 
 }
