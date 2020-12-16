@@ -9,7 +9,7 @@ import { ServerService } from '../server.service';
 export class StatusComponent implements OnInit {
 
   currentDate: Date
-  ping: any = "0";
+  ping: any = "null";
  
   constructor(
     public server: ServerService

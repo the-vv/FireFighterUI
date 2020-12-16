@@ -27,8 +27,8 @@
         <p class="h6 text-success">{{server.mainStatus?.mode}}</p>
     </div>
     <span class="text-white"><hr color="white" class="p-0 m-0"></span>
-    <div class="row p-1 d-flex align-items-center">
+    <div class="row p-1 d-flex align-items-center justify-content-center">
         <img src="../../assets/wheels.png" height="50px" alt="Obstacle" class="pr-2">
-        <span class="h4 text-info"> {{ping}} cm </span>
+        <span class="h4" [ngClass]="{'text-danger': ping <=15, 'text-success': ping >= 15 && ping < 100, 'text-primary': ping >= 100}"> {{ping}} cm </span>
     </div>
 </div>

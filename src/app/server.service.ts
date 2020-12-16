@@ -25,11 +25,17 @@ export class ServerService {
     socket.on('disconnect', () => {      
       console.log('Disconnected'); // false
       this.alert.danger('Disconnected')
+      this.terminalLog = this.terminalLog + 'Disconnected from system' + '\n'
+      let msgContainer = document.getElementById("terminal-display");           
+      msgContainer.scrollTop = msgContainer.scrollHeight;
       // location.href = 'https://firefighteronline.herokuapp.com'
     });
     socket.on('status', (data) => {
       console.log(data);
       this.mainStatus = data
+    })
+    socket.on('systemError', data =>{
+      this.alert.warning(data.error)
     })
     socket.on('videoUrl', (data) =>{
       console.log('Video: ', data);      
@@ -44,10 +50,10 @@ export class ServerService {
       }
     })
     this.socket.on('newSession', () =>{
-      if(confirm('Session disconnected due to another session\nclick ok to reconnect')){
+      if(confirm('Session disconnected due to another session\nReconnect?')){
         location.reload()
       }else{
-        // location.href = 'https://firefighteronline.herokuapp.com'
+        location.href = 'https://firefighteronline.herokuapp.com'
       }
     })
   }

@@ -18,7 +18,7 @@ import { MapComponent } from './map/map.component';
 import { ServerService } from './server.service';
 import { SafePipe } from './safepipe'
 
-const config: SocketIoConfig = { url: 'https://8b4afdddd2c8.ngrok.io', options: {} };
+const config: SocketIoConfig = { url: 'https://3184a6edfb74.ngrok.io', options: {} };
 
 @NgModule({
   declarations: [
