@@ -28,9 +28,10 @@ export class MapComponent implements OnInit, AfterViewInit {
       if (this.mapShown) {
         this.map.setCenter(data.reverse())
         this.marker.setLngLat(data)
-      } 
-      else { 
+      }
+      else {
         this.setMap(data);
+        this.alertService.info('Located')
         this.mapShown = true;
       }
     })
@@ -48,9 +49,9 @@ export class MapComponent implements OnInit, AfterViewInit {
       zoom: 16
     });
     this.marker = new mapboxgl.Marker({
-      color: "#ff0000",
+      color: "#ff3333",
       draggable: false
-      })
+    })
       .setLngLat(loc)
       .addTo(this.map);
   }
