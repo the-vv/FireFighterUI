@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { status } from './interfaces/mainStatus'
+import { AlertService } from '@full-fledged/alerts';
 
 @Injectable({
   providedIn: 'root'
@@ -11,21 +12,25 @@ export class ServerService {
   terminalLog: string = '';
   videoUrl = '';
   statusUrl = '';
-  location: any
-
+  location = this.socket.fromEvent<any>('piLocation')
   constructor(
-    private socket: Socket
+    private socket: Socket,
+    private alert: AlertService
     ) {
     socket.on('connect', () => {
       console.log('connected'); // true
+      alert.success('Connected')
     });
-    socket.on('piLocation', (location) =>{
-      console.log(location);      
-      this.location = location;
-    })
-    socket.on('disconnect', () => {
-      
+    // socket.on('piLocation', (location) =>{
+    //   console.log(location);      
+    //   this.location = location;
+    //   if(this.callback){
+    //     this.callback(this.location);
+    //   }
+    // })
+    socket.on('disconnect', () => {      
       console.log('Disconnected'); // false
+      this.alert.danger('Disconnected')
       // location.href = 'https://firefighteronline.herokuapp.com'
     });
     socket.on('status', (data) => {

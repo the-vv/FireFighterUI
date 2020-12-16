@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { AlertModule } from '@full-fledged/alerts';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { FormsModule } from '@angular/forms';
@@ -16,8 +18,8 @@ import { MapComponent } from './map/map.component';
 import { ServerService } from './server.service';
 import { SafePipe } from './safepipe'
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
- 
+const config: SocketIoConfig = { url: 'https://8b4afdddd2c8.ngrok.io', options: {} };
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,11 +31,13 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     SafePipe
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
     SocketIoModule.forRoot(config),
+    AlertModule.forRoot({maxMessages: 5, timeout: 5000, positionX: 'right', positionY: 'top'})
   ],
   providers: [
     ServerService
