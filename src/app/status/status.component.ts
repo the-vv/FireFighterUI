@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ServerService } from '../server.service'
+import { ServerService } from '../server.service';
 
 @Component({
   selector: 'app-status',
@@ -9,7 +9,8 @@ import { ServerService } from '../server.service'
 export class StatusComponent implements OnInit {
 
   currentDate: Date
-
+  ping: any = "0";
+ 
   constructor(
     public server: ServerService
   ) { }
@@ -17,7 +18,10 @@ export class StatusComponent implements OnInit {
   ngOnInit(): void {
     setInterval(() => {
       this.currentDate = new Date();      
-    }, 1000);
+    }, 1000);    
+    this.server.distance.subscribe(ping => {
+      this.ping = ping;
+    })
   }
 
 }

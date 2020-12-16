@@ -13,6 +13,7 @@ export class ServerService {
   videoUrl = '';
   statusUrl = '';
   location = this.socket.fromEvent<any>('piLocation')
+  distance = this.socket.fromEvent<any>('ping')
   constructor(
     private socket: Socket,
     private alert: AlertService
@@ -21,13 +22,6 @@ export class ServerService {
       console.log('connected'); // true
       alert.success('Connected')
     });
-    // socket.on('piLocation', (location) =>{
-    //   console.log(location);      
-    //   this.location = location;
-    //   if(this.callback){
-    //     this.callback(this.location);
-    //   }
-    // })
     socket.on('disconnect', () => {      
       console.log('Disconnected'); // false
       this.alert.danger('Disconnected')

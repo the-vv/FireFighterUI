@@ -8,7 +8,7 @@ import { ServerService } from '../server.service'
 })
 export class VideoComponent implements OnInit {
 
-  trigger: boolean = false
+  trigger: boolean = true
 
   constructor(
     public socketService: ServerService
@@ -18,8 +18,8 @@ export class VideoComponent implements OnInit {
     !this.trigger && this.triggerVideo();
   }
 
-  triggerVideo(){
-    if(!this.trigger){
+  triggerVideo() {
+    if (!this.trigger) {
       this.socketService.getStatusUrl()
     }
   }
