@@ -15,12 +15,20 @@ export class VideoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    !this.trigger && this.triggerVideo();
+    if (!this.trigger) {
+      this.socketService.getStatusUrl()
+      this.socketService.customEmit(false, 'getVideo')
+    } else {
+      this.socketService.customEmit(true, 'getVideo')
+    }
   }
 
   triggerVideo() {
     if (!this.trigger) {
       this.socketService.getStatusUrl()
+      this.socketService.customEmit(false, 'getVideo')
+    } else {
+      this.socketService.customEmit(true, 'getVideo')
     }
   }
 
