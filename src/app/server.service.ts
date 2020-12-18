@@ -15,6 +15,7 @@ export class ServerService {
   statusUrl = '';
   location = this.socket.fromEvent<any>('piLocation')
   distance = this.socket.fromEvent<any>('ping')
+  mapboxKey = this.socket.fromOneTimeEvent<any>('mapboxKey')
 
   constructor(
     private socket: Socket,

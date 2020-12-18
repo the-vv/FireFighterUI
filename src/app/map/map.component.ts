@@ -35,6 +35,10 @@ export class MapComponent implements OnInit, AfterViewInit {
         this.mapShown = true;
       }
     })
+    // this.socketServer.mapboxKey.then(key =>{
+    //   console.log(key);
+      
+    // })
   }
 
   ngAfterViewInit() {
@@ -42,6 +46,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   setMap(loc: any) {
     mapboxgl.accessToken = 'pk.eyJ1IjoidGhlLXZ2IiwiYSI6ImNraXI1NzB5YTBlMTMydW9icGloNTQ5djUifQ.J9gsIPoIRnDTdFgMRHySXw';
+    // mapboxgl.accessToken = key
     this.map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/satellite-streets-v11',
