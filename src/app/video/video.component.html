@@ -10,11 +10,11 @@
             </div>
         </div>
     </div> 
-    <div class="row">
+    <div class="row" [ngClass]="{'bg-image': socketService.streamFrame[0] != 'd'}">
         <div class="col-12">
             <div class="row">
-                <img *ngIf="trigger" class="p-0 m-0 mx-auto" [src]="socketService.streamFrame | safe" alt="Loading..."
-                    [ngClass]="{'bg-image': socketService.videoUrl?.length == 0, 'col-12':socketService.videoUrl?.length == 0, 'col-md-8':socketService.videoUrl?.length != 0}">
+                <img *ngIf="trigger" class="p-0 m-0 mx-auto col-md-7" [src]="socketService.streamFrame | safe" alt="Loading..."
+                    [ngClass]="{'bg-image': socketService.streamFrame[0] != 'd'}">
                 <iframe *ngIf="!trigger" class="col-12 p-0 m-0 mx-auto" [src]="socketService.statusUrl | safe"
                     frameborder="0" [ngClass]="{'bg-image': socketService.statusUrl?.length < 1}"></iframe>
             </div>

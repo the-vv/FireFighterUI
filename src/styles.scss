@@ -48,6 +48,12 @@
     background-repeat  : no-repeat;
 }
 
+div.block-ui-wrapper,
+.block-ui-main,
+.active {
+    cursor     : default;
+    user-select: none;
+}
 
 @media(max-width:576px) {
     #right-shalf {

@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { status } from './interfaces/mainStatus'
 import { AlertService } from '@full-fledged/alerts';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServerService {
 
-  streamFrame = '';
+  streamFrame = '../assets/frameLoader.gif';
   mainStatus: status;
   terminalLog: string = '';
   videoUrl = '';
@@ -17,15 +18,21 @@ export class ServerService {
   distance = this.socket.fromEvent<any>('ping')
   mapboxKey = this.socket.fromOneTimeEvent<any>('mapboxKey')
 
+  @BlockUI() blockUI: NgBlockUI;
+
   constructor(
     private socket: Socket,
     private alert: AlertService
   ) {
+    this.blockUI.start('Connecting...')
     socket.on('connect', () => {
+      this.blockUI.stop();
       console.log('connected'); // true
       alert.success('Connected')
     });
     socket.on('disconnect', (err) => {
+      this.blockUI.start('Disconnected!')
+      this.streamFrame = '../assets/frameLoader.gif'
       console.log('Disconnected', err); // false
       this.alert.danger('Disconnected')
       this.terminalLog = this.terminalLog + 'Disconnected from system' + '\n'
