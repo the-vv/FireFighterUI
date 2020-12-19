@@ -22,30 +22,28 @@ export class MapComponent implements OnInit, AfterViewInit {
   mapShown = false;
 
   ngOnInit() {
-    this.socketServer.location.subscribe(loc => {
-      var data = [loc['latitude'], loc['longitude']]
-      console.log(data);
-      if (this.mapShown) {
-        this.map.setCenter(data.reverse())
-        this.marker.setLngLat(data)
-      }
-      else {
-        this.setMap(data);
-        this.alertService.info('Located')
-        this.mapShown = true;
-      }
+    this.socketServer.mapboxKey.then((key) =>{
+      this.socketServer.location.subscribe(loc => {
+        var data = [loc['latitude'], loc['longitude']]
+        console.log(data);
+        if (this.mapShown) {
+          this.map.setCenter(data.reverse())
+          this.marker.setLngLat(data)
+        }
+        else {
+          this.setMap(data, key);
+          this.alertService.info('Located')
+          this.mapShown = true;
+        }
+      })    
     })
-    // this.socketServer.mapboxKey.then(key =>{
-    //   console.log(key);
-      
-    // })
   }
 
   ngAfterViewInit() {
   }
 
-  setMap(loc: any) {
-    mapboxgl.accessToken = 'pk.eyJ1IjoidGhlLXZ2IiwiYSI6ImNraXI1NzB5YTBlMTMydW9icGloNTQ5djUifQ.J9gsIPoIRnDTdFgMRHySXw';
+  setMap(loc: any, key: any) {
+    mapboxgl.accessToken = key;
     // mapboxgl.accessToken = key
     this.map = new mapboxgl.Map({
       container: 'map',

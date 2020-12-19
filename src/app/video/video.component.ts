@@ -8,7 +8,7 @@ import { ServerService } from '../server.service'
 })
 export class VideoComponent implements OnInit {
 
-  trigger: boolean = true
+  trigger: boolean = false
 
   constructor(
     public socketService: ServerService

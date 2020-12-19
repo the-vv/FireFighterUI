@@ -25,8 +25,8 @@ export class ServerService {
       console.log('connected'); // true
       alert.success('Connected')
     });
-    socket.on('disconnect', () => {
-      console.log('Disconnected'); // false
+    socket.on('disconnect', (err) => {
+      console.log('Disconnected', err); // false
       this.alert.danger('Disconnected')
       this.terminalLog = this.terminalLog + 'Disconnected from system' + '\n'
       let msgContainer = document.getElementById("terminal-display");
