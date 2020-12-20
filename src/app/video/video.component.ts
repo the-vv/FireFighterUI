@@ -23,7 +23,8 @@ export class VideoComponent implements OnInit {
     }
   }
 
-  triggerVideo() {
+  triggerVideo() {    
+    this.trigger = !this.trigger
     this.socketService.requestVideo(this.trigger)
     if (!this.trigger) {
       this.socketService.getStatusUrl()

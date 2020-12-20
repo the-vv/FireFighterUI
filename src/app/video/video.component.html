@@ -2,10 +2,11 @@
     <div class="row bg-primary">
         <div class="col">
             <div class="row p-1">Video Stream / System Status
-                <div class="ml-2 custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input bg-success" id="customSwitch2"
+                <div class="custom-control custom-switch">
+                    <!-- <input type="checkbox" class="custom-control-input bg-success" id="customSwitch2"
                         [(ngModel)]="trigger" (change)="triggerVideo()">
-                    <label class="custom-control-label" for="customSwitch2" style="cursor: pointer;"> </label>
+                    <label class="custom-control-label" for="customSwitch2" style="cursor: pointer;"> </label> -->
+                    <ui-switch size="small" (change)="triggerVideo()" defaultBgColor="blue"></ui-switch>
                 </div>
             </div>
         </div>

@@ -51,7 +51,7 @@ export class ServerService {
       this.mainStatus = data
     })
     socket.on('systemError', data => {
-      this.alert.warning(data.error)
+      this.alert.warning(data.error)      
     })
     socket.on('terminalLog', (data) => {
       if (data) {
@@ -113,6 +113,7 @@ export class ServerService {
   }
 
   requestVideo(action: boolean) {
+    console.log(action);    
     this.videoTrig = action;
     this.socket.emit('getVideo', action);
   }
