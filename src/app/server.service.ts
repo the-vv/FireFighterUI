@@ -50,7 +50,7 @@ export class ServerService {
       this.mainStatus = data
     })
     socket.on('systemError', data => {
-      this.alert.warning(data.error)      
+      this.alert.warning(data)      
     })
     socket.on('terminalLog', (data) => {
       if (data) {
