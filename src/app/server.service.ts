@@ -27,8 +27,7 @@ export class ServerService {
     private alert: AlertService,
     private spinner: NgxSpinnerService
   ) {
-    this.showSpinner()
-    spinner.show()
+    this.showSpinner('<br><br><h2 class="mt-sm-5" style="padding-bottom:10px;margin-bottom:0px;">Welcome to Fighter Control Panel</h2>Now establishing connection with fighter...')
     socket.on('connect', () => {
       this.hideSpinner()
       // this.blockUI.stop();
@@ -85,9 +84,9 @@ export class ServerService {
   }
 
   startRedirectTimer(duration = 30) {
-    this.showSpinner('Disconnected')
+    this.showSpinner('<br><h3>Disconnected!</h3>')
     this.redirectSeconds = setInterval(() => {
-      this.loadingText = 'Disconnected!<br>You will be redirected in ' + duration + ' if unable to connect!'
+      this.loadingText = '<br><h3 class="mt-sm-5">Disconnected!</h3>You will be redirected in ' + duration + ' if unable to connect!'
       if (duration-- == 0) {
         clearInterval(this.redirectSeconds)
         location.href = 'https://firefighteronline.herokuapp.com'
@@ -113,7 +112,6 @@ export class ServerService {
   }
 
   requestVideo(action: boolean) {
-    console.log(action);    
     this.videoTrig = action;
     this.socket.emit('getVideo', action);
   }
