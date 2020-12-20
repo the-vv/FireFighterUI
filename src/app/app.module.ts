@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AlertModule } from '@full-fledged/alerts';
-import { BlockUIModule } from 'ng-block-ui';
+import { NgxSpinnerModule } from "ngx-spinner";
+
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { FormsModule } from '@angular/forms';
@@ -19,7 +20,7 @@ import { MapComponent } from './map/map.component';
 import { ServerService } from './server.service';
 import { SafePipe } from './safepipe'
 
-const config: SocketIoConfig = { url: 'https://a37aa21f704e.ngrok.io', options: {} };
+const config: SocketIoConfig = { url: 'https://98ed1e533edc.ngrok.io', options: {} };
 
 @NgModule({
   declarations: [
@@ -39,11 +40,12 @@ const config: SocketIoConfig = { url: 'https://a37aa21f704e.ngrok.io', options: 
     HttpClientModule,
     SocketIoModule.forRoot(config),
     AlertModule.forRoot({maxMessages: 5, timeout: 5000, positionX: 'right', positionY: 'top'}),
-    BlockUIModule.forRoot()
+    NgxSpinnerModule
   ],
   providers: [
     ServerService
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

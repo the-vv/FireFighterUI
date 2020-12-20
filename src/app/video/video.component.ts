@@ -24,12 +24,11 @@ export class VideoComponent implements OnInit {
   }
 
   triggerVideo() {
+    this.socketService.requestVideo(this.trigger)
     if (!this.trigger) {
       this.socketService.getStatusUrl()
       this.socketService.streamFrame = '../assets/frameLoader.gif';
-      this.socketService.customEmit(false, 'getVideo')
     } else {
-      this.socketService.customEmit(true, 'getVideo')
     }
   }
 

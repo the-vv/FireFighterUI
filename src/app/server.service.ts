@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { status } from './interfaces/mainStatus'
 import { AlertService } from '@full-fledged/alerts';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { NgxSpinnerService } from "ngx-spinner";
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,26 +13,31 @@ export class ServerService {
   streamFrame = '../assets/frameLoader.gif';
   mainStatus: status;
   terminalLog: string = '';
-  videoUrl = '';
   statusUrl = '';
+  videoTrig: boolean;
+  redirectSeconds: any;
+  loadingText = 'Connecting...'
   location = this.socket.fromEvent<any>('piLocation')
   distance = this.socket.fromEvent<any>('ping')
   mapboxKey = this.socket.fromOneTimeEvent<any>('mapboxKey')
 
-  @BlockUI() blockUI: NgBlockUI;
 
   constructor(
     private socket: Socket,
-    private alert: AlertService
+    private alert: AlertService,
+    private spinner: NgxSpinnerService
   ) {
-    this.blockUI.start('Connecting...')
+    this.showSpinner()
+    spinner.show()
     socket.on('connect', () => {
-      this.blockUI.stop();
+      this.hideSpinner()
+      // this.blockUI.stop();
+      this.redirectSeconds && clearInterval(this.redirectSeconds)
       console.log('connected'); // true
       alert.success('Connected')
     });
     socket.on('disconnect', (err) => {
-      this.blockUI.start('Disconnected!')
+      this.startRedirectTimer()
       this.streamFrame = '../assets/frameLoader.gif'
       console.log('Disconnected', err); // false
       this.alert.danger('Disconnected')
@@ -46,10 +52,6 @@ export class ServerService {
     })
     socket.on('systemError', data => {
       this.alert.warning(data.error)
-    })
-    socket.on('videoUrl', (data) => {
-      console.log('Video: ', data);
-      this.videoUrl = data;
     })
     socket.on('terminalLog', (data) => {
       if (data) {
@@ -67,8 +69,30 @@ export class ServerService {
       }
     })
     socket.on('camFrame', data => {
-      this.streamFrame = 'data:image/jpg;base64, ' + data;
+      if (this.videoTrig) {
+        this.streamFrame = 'data:image/jpg;base64, ' + data;
+      }
     })
+  }
+
+  showSpinner(message = 'Connecting...') {
+    this.loadingText = message;
+    this.spinner.show();
+  }
+
+  hideSpinner() {
+    this.spinner.hide()
+  }
+
+  startRedirectTimer(duration = 30) {
+    this.showSpinner('Disconnected')
+    this.redirectSeconds = setInterval(() => {
+      this.loadingText = 'Disconnected!<br>You will be redirected in ' + duration + ' if unable to connect!'
+      if (duration-- == 0) {
+        clearInterval(this.redirectSeconds)
+        location.href = 'https://firefighteronline.herokuapp.com'
+      }
+    }, 1000);
   }
 
   sendNav(command: any) {
@@ -86,6 +110,11 @@ export class ServerService {
 
   customEmit(data: any, event: any = 'customEvent') {
     this.socket.emit(event, data)
+  }
+
+  requestVideo(action: boolean) {
+    this.videoTrig = action;
+    this.socket.emit('getVideo', action);
   }
 
   getStatusUrl() {

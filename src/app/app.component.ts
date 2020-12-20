@@ -7,7 +7,7 @@ import { ServerService } from './server.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private server: ServerService){
+  constructor(public server: ServerService){
     
   }
 }
