@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
 import { status } from './interfaces/mainStatus'
 import { AlertService } from '@full-fledged/alerts';
 import { NgxSpinnerService } from "ngx-spinner";
-
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+
+import * as io from 'socket.io-client';
 
 @Injectable({
   providedIn: 'root'
@@ -19,19 +18,32 @@ export class ServerService {
   videoTrig: boolean;
   redirectSeconds: any;
   loadingText = 'Connecting...'
-  location = this.socket.fromEvent<any>('piLocation')
-  distance = this.socket.fromEvent<any>('ping')
-  mapboxKey = this.socket.fromOneTimeEvent<any>('mapboxKey')
-
+  // location = this.socket.fromEvent<any>('piLocation')
+  // distance = this.socket.fromEvent<any>('ping')
+  // mapboxKey = this.socket.fromOneTimeEvent<any>('mapboxKey')
+  socketTest: SocketIOClient.Socket = io('null');
+  // socketTest = io('https://ecce2e33cf0c.ngrok.io');
 
   constructor(
-    private socket: Socket,
     private alert: AlertService,
     private spinner: NgxSpinnerService,
     private http: HttpClient
   ) {
     this.showSpinner('<br><br><h2 class="mt-sm-5" style="padding-bottom:10px;margin-bottom:0px;">Welcome to Fighter Control Panel</h2>Now establishing connection with fighter...')
-    
+    http.get<any>('/geturl')
+      .subscribe(data => {
+        console.log('got url', data);
+        this.socketTest = io(data['url']);
+        this.socketTest.on('connect', () => {
+          this.hideSpinner()
+          // this.blockUI.stop();
+          this.redirectSeconds && clearInterval(this.redirectSeconds)
+          console.log('connected'); // true
+          this.socketTest.removeAllListeners()
+          this.alert.success('Connected')
+          this.startSocket(this.socketTest)
+        })
+      })
   }
 
   showSpinner(message = 'Connecting...') {
@@ -56,7 +68,7 @@ export class ServerService {
 
   sendNav(command: any) {
     console.log(command);
-    this.socket.emit('manualCommand', command);
+    this.socketTest.emit('manualCommand', command);
   }
 
   sendCommand(data: string, silent: boolean = false) {
@@ -64,21 +76,21 @@ export class ServerService {
     this.terminalLog = this.terminalLog + '>> ' + data + '\n';
     let msgContainer = document.getElementById("terminal-display");
     msgContainer.scrollTop = msgContainer.scrollHeight;
-    this.socket.emit('newCommand', data)
+    this.socketTest.emit('newCommand', data)
   }
 
   customEmit(data: any, event: any = 'customEvent') {
-    this.socket.emit(event, data)
+    this.socketTest.emit(event, data)
   }
 
   requestVideo(action: boolean) {
     this.videoTrig = action;
-    this.socket.emit('getVideo', action);
+    this.socketTest.emit('getVideo', action);
   }
 
   getStatusUrl() {
     if (this.statusUrl.length == 0) {
-      this.socket.emit('statusUrl', true, (url) => {
+      this.socketTest.emit('statusUrl', true, (url) => {
         console.log(url)
         this.statusUrl = url
         return url;
@@ -88,15 +100,8 @@ export class ServerService {
     }
   }
 
-  startSocket() {
-    this.socket.on('connect', () => {
-      this.hideSpinner()
-      // this.blockUI.stop();
-      this.redirectSeconds && clearInterval(this.redirectSeconds)
-      console.log('connected'); // true
-      this.alert.success('Connected')
-    });
-    this.socket.on('disconnect', (err) => {
+  startSocket(socket) {
+    socket.on('disconnect', (err) => {
       this.startRedirectTimer()
       this.streamFrame = '../assets/frameLoader.gif'
       console.log('Disconnected', err); // false
@@ -106,14 +111,14 @@ export class ServerService {
       msgContainer.scrollTop = msgContainer.scrollHeight;
       // location.href = 'https://firefighteronline.herokuapp.com'
     });
-    this.socket.on('status', (data) => {
+    socket.on('status', (data) => {
       console.log(data);
       this.mainStatus = data
     })
-    this.socket.on('systemError', data => {
-      this.alert.warning(data)      
+    socket.on('systemError', data => {
+      this.alert.warning(data)
     })
-    this.socket.on('terminalLog', (data) => {
+    socket.on('terminalLog', (data) => {
       if (data) {
         // console.log(data);
         this.terminalLog = this.terminalLog + data + '\n'
@@ -121,14 +126,14 @@ export class ServerService {
         msgContainer.scrollTop = msgContainer.scrollHeight;
       }
     })
-    this.socket.on('newSession', () => {
+    socket.on('newSession', () => {
       if (confirm('Session disconnected due to another session\nReconnect?')) {
         location.reload()
       } else {
         location.href = 'https://firefighteronline.herokuapp.com'
       }
     })
-    this.socket.on('camFrame', data => {
+    socket.on('camFrame', data => {
       if (this.videoTrig) {
         this.streamFrame = 'data:image/jpg;base64, ' + data;
       }

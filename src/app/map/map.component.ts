@@ -22,8 +22,8 @@ export class MapComponent implements OnInit, AfterViewInit {
   mapShown = false;
 
   ngOnInit() {
-    this.socketServer.mapboxKey.then((key) =>{
-      this.socketServer.location.subscribe(loc => {
+    this.socketServer.socketTest.on('mapboxKey', (key) =>{
+      this.socketServer.socketTest.on('piLocation', loc => {
         var data = [loc['latitude'], loc['longitude']]
         console.log(data);
         if (this.mapShown) {

@@ -19,7 +19,7 @@ export class StatusComponent implements OnInit {
     setInterval(() => {
       this.currentDate = new Date();      
     }, 1000);    
-    this.server.distance.subscribe(ping => {
+    this.server.socketTest.on('ping', ping => {
       this.ping = ping;
     })
   }
