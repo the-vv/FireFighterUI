@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, Injectable  } from '@angular/core';
 
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -19,6 +19,16 @@ import { VideoComponent } from './video/video.component';
 import { MapComponent } from './map/map.component';
 import { ServerService } from './server.service';
 import { SafePipe } from './safepipe'
+import { Socket } from 'ngx-socket-io';
+ 
+@Injectable()
+export class SocketOne extends Socket {
+ 
+    constructor() {
+        super({ url: 'http://url_one:portOne', options: {} });
+    }
+ 
+}
 
 const config: SocketIoConfig = { url: 'https://f5d5efbf88a7.ngrok.io', options: {} };
 
@@ -38,7 +48,7 @@ const config: SocketIoConfig = { url: 'https://f5d5efbf88a7.ngrok.io', options: 
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    SocketIoModule.forRoot(config),
+    SocketIoModule,
     AlertModule.forRoot({maxMessages: 5, timeout: 5000, positionX: 'right', positionY: 'top'}),
     NgxSpinnerModule,
     UiSwitchModule

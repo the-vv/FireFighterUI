@@ -4,6 +4,8 @@ import { status } from './interfaces/mainStatus'
 import { AlertService } from '@full-fledged/alerts';
 import { NgxSpinnerService } from "ngx-spinner";
 
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,53 +27,11 @@ export class ServerService {
   constructor(
     private socket: Socket,
     private alert: AlertService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private http: HttpClient
   ) {
     this.showSpinner('<br><br><h2 class="mt-sm-5" style="padding-bottom:10px;margin-bottom:0px;">Welcome to Fighter Control Panel</h2>Now establishing connection with fighter...')
-    socket.on('connect', () => {
-      this.hideSpinner()
-      // this.blockUI.stop();
-      this.redirectSeconds && clearInterval(this.redirectSeconds)
-      console.log('connected'); // true
-      alert.success('Connected')
-    });
-    socket.on('disconnect', (err) => {
-      this.startRedirectTimer()
-      this.streamFrame = '../assets/frameLoader.gif'
-      console.log('Disconnected', err); // false
-      this.alert.danger('Disconnected')
-      this.terminalLog = this.terminalLog + 'Disconnected from system' + '\n'
-      let msgContainer = document.getElementById("terminal-display");
-      msgContainer.scrollTop = msgContainer.scrollHeight;
-      // location.href = 'https://firefighteronline.herokuapp.com'
-    });
-    socket.on('status', (data) => {
-      console.log(data);
-      this.mainStatus = data
-    })
-    socket.on('systemError', data => {
-      this.alert.warning(data)      
-    })
-    socket.on('terminalLog', (data) => {
-      if (data) {
-        // console.log(data);
-        this.terminalLog = this.terminalLog + data + '\n'
-        let msgContainer = document.getElementById("terminal-display");
-        msgContainer.scrollTop = msgContainer.scrollHeight;
-      }
-    })
-    socket.on('newSession', () => {
-      if (confirm('Session disconnected due to another session\nReconnect?')) {
-        location.reload()
-      } else {
-        location.href = 'https://firefighteronline.herokuapp.com'
-      }
-    })
-    socket.on('camFrame', data => {
-      if (this.videoTrig) {
-        this.streamFrame = 'data:image/jpg;base64, ' + data;
-      }
-    })
+    
   }
 
   showSpinner(message = 'Connecting...') {
@@ -126,6 +86,53 @@ export class ServerService {
     } else {
       return this.statusUrl;
     }
+  }
+
+  startSocket() {
+    this.socket.on('connect', () => {
+      this.hideSpinner()
+      // this.blockUI.stop();
+      this.redirectSeconds && clearInterval(this.redirectSeconds)
+      console.log('connected'); // true
+      this.alert.success('Connected')
+    });
+    this.socket.on('disconnect', (err) => {
+      this.startRedirectTimer()
+      this.streamFrame = '../assets/frameLoader.gif'
+      console.log('Disconnected', err); // false
+      this.alert.danger('Disconnected')
+      this.terminalLog = this.terminalLog + 'Disconnected from system' + '\n'
+      let msgContainer = document.getElementById("terminal-display");
+      msgContainer.scrollTop = msgContainer.scrollHeight;
+      // location.href = 'https://firefighteronline.herokuapp.com'
+    });
+    this.socket.on('status', (data) => {
+      console.log(data);
+      this.mainStatus = data
+    })
+    this.socket.on('systemError', data => {
+      this.alert.warning(data)      
+    })
+    this.socket.on('terminalLog', (data) => {
+      if (data) {
+        // console.log(data);
+        this.terminalLog = this.terminalLog + data + '\n'
+        let msgContainer = document.getElementById("terminal-display");
+        msgContainer.scrollTop = msgContainer.scrollHeight;
+      }
+    })
+    this.socket.on('newSession', () => {
+      if (confirm('Session disconnected due to another session\nReconnect?')) {
+        location.reload()
+      } else {
+        location.href = 'https://firefighteronline.herokuapp.com'
+      }
+    })
+    this.socket.on('camFrame', data => {
+      if (this.videoTrig) {
+        this.streamFrame = 'data:image/jpg;base64, ' + data;
+      }
+    })
   }
 
 }
