@@ -33,16 +33,21 @@ export class ServerService {
     http.get<any>('/geturl')
       .subscribe(data => {
         console.log('got url', data);
-        this.socketTest = io(data['url']);
-        this.socketTest.on('connect', () => {
-          this.hideSpinner()
-          // this.blockUI.stop();
-          this.redirectSeconds && clearInterval(this.redirectSeconds)
-          console.log('connected'); // true
-          this.socketTest.removeAllListeners()
-          this.alert.success('Connected')
-          this.startSocket(this.socketTest)
-        })
+        if (data['url'] != null) {
+          this.socketTest = io(data['url']);
+          this.socketTest.on('connect', () => {
+            this.hideSpinner()
+            // this.blockUI.stop();
+            this.redirectSeconds && clearInterval(this.redirectSeconds)
+            console.log('connected'); // true
+            this.socketTest.removeAllListeners()
+            this.alert.success('Connected')
+            this.startSocket(this.socketTest)
+          })
+        }
+        else{
+          this.showSpinner('<span class="text-danger">Server Communication url error occured</span>');
+        }
       })
   }
 
