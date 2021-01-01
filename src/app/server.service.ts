@@ -46,7 +46,10 @@ export class ServerService {
           })
         }
         else{
-          this.showSpinner('<span class="text-danger">Server Communication url error occured</span>');
+          this.showSpinner('<span class="text-danger">Server Communication url error<br>Redirecting...</span>');
+          setTimeout(() => {
+            location.href = 'https://firefighteronline.herokuapp.com'
+          }, 2000);
         }
       })
   }
