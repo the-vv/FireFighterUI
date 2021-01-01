@@ -11,6 +11,7 @@ import * as io from 'socket.io-client';
 })
 export class ServerService {
 
+  FighterSystemUrl = '';
   streamFrame = '../assets/frameLoader.gif';
   mainStatus: status;
   terminalLog: string = '';
