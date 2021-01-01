@@ -16,7 +16,8 @@ import { TerminalComponent } from './terminal/terminal.component';
 import { VideoComponent } from './video/video.component';
 import { MapComponent } from './map/map.component';
 import { ServerService } from './server.service';
-import { SafePipe } from './safepipe'
+import { SafePipe } from './safepipe';
+import { StarterComponent } from './starter/starter.component'
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { SafePipe } from './safepipe'
     TerminalComponent,
     VideoComponent,
     MapComponent,
-    SafePipe
+    SafePipe,
+    StarterComponent
   ],
   imports: [
     BrowserAnimationsModule,
