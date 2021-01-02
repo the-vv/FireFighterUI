@@ -18,10 +18,7 @@ export class StatusComponent implements OnInit {
   ngOnInit(): void {
     setInterval(() => {
       this.currentDate = new Date();      
-    }, 1000);    
-    this.server.socketTest.on('ping', ping => {
-      this.ping = ping;
-    })
+    }, 1000);   
   }
 
 }
