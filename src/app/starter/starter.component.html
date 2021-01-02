@@ -1,49 +1,51 @@
 <div class="container-fluid bg-dark">
-    <div id="main" class="row d-flex justify-content-center align-content-center">
-  
-      <div *ngIf="!available && status != 'Disconnected'" class="text-center">
-        <img src="../assets/robo-check.png" height="200px" alt="" class="d-block"><div class="w-100 text-center lead mt-3 text-light">
-          System unavailable!
-        </div>
-        <div class="w-100 text-center lead text-light">
-          Waiting for system to start
-        </div>
-        <div class="w-100 text-center mt-3">
-          <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
+  <div id="main" class="row d-flex justify-content-center align-content-center">
+
+    <div *ngIf="!available && status != 'Disconnected'" class="text-center">
+      <img src="../assets/robo-check.png" height="200px" alt="" class="d-block">
+      <div class="w-100 text-center lead mt-3 text-light">
+        System unavailable!
+      </div>
+      <div class="w-100 text-center lead text-light">
+        Waiting for system to start
+      </div>
+      <div class="w-100 text-center mt-3">
+        <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+          <span class="sr-only">Loading...</span>
         </div>
       </div>
-  
-      <div *ngIf="server.FighterSystemUrl?.length" class="text-center">
-        <img src="../assets/robo-done.png" height="200px" alt="" class="">
-        <div class="w-100 text-center lead mt-3 text-light">
-          System started and available...
-        </div>
-        <div class="w-100 text-center mt-3">
-          <!-- <a href="{{server.FighterSystemUrl}}" class="btn btn-success"> -->
-              <a routerLink="/controller"></a>
-            Launch
-          </a>
-        </div>
-      </div>
-  
-      <div *ngIf="status == 'Disconnected'" class="text-center">
-        <img src="../assets/robo.png" height="200px" alt="" class="">
-        <div class="w-100 text-center lead mt-3 text-light">
-          Disconnected from the System
-        </div>
-        <div class="w-100 text-center mt-3">
-          <button class="btn btn-primary" (click)="reload()">
-            Reload
-          </button>
-        </div>
-      </div>
-  
-      <p class="refresh position-fixed" [ngClass]="{'text-success': status === 'Connected', 'text-muted':status === 'Unavailable', 'text-danger':status === 'Disconnected' }">
-        Realtime status: {{status}}
-        <!-- <i class="fas fa-sync"></i> -->
-      </p>
-  
     </div>
+
+    <div *ngIf="server.FighterSystemUrl?.length" class="text-center">
+      <img src="../assets/robo-done.png" height="200px" alt="" class="">
+      <div class="w-100 text-center lead mt-3 text-light">
+        System started and available...
+      </div>
+      <div class="w-100 text-center mt-3">
+        <!-- <a href="{{server.FighterSystemUrl}}" class="btn btn-success"> -->
+        <a routerLink="/controller" class="btn btn-success">
+          Launch
+        </a>
+      </div>
+    </div>
+
+    <div *ngIf="status == 'Disconnected'" class="text-center">
+      <img src="../assets/robo.png" height="200px" alt="" class="">
+      <div class="w-100 text-center lead mt-3 text-light">
+        Disconnected from the System
+      </div>
+      <div class="w-100 text-center mt-3">
+        <button class="btn btn-primary" (click)="reload()">
+          Reload
+        </button>
+      </div>
+    </div>
+
+    <p class="refresh position-fixed"
+      [ngClass]="{'text-success': status === 'Connected', 'text-muted':status === 'Unavailable', 'text-danger':status === 'Disconnected' }">
+      Realtime status: {{status}}
+      <!-- <i class="fas fa-sync"></i> -->
+    </p>
+
   </div>
+</div>

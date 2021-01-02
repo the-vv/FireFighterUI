@@ -17,7 +17,8 @@ import { VideoComponent } from './video/video.component';
 import { MapComponent } from './map/map.component';
 import { ServerService } from './server.service';
 import { SafePipe } from './safepipe';
-import { StarterComponent } from './starter/starter.component'
+import { StarterComponent } from './starter/starter.component';
+import { ControllerBaseComponent } from './controller-base/controller-base.component'
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { StarterComponent } from './starter/starter.component'
     VideoComponent,
     MapComponent,
     SafePipe,
-    StarterComponent
+    StarterComponent,
+    ControllerBaseComponent
   ],
   imports: [
     BrowserAnimationsModule,

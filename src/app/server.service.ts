@@ -31,28 +31,50 @@ export class ServerService {
     private http: HttpClient
   ) {
     this.showSpinner('<br><br><h2 class="mt-sm-5" style="padding-bottom:10px;margin-bottom:0px;">Welcome to Fighter Control Panel</h2>Now establishing connection with fighter...')
-    http.get<any>('/geturl')
-      .subscribe(data => {
-        console.log('got url', data);
-        if (data['url'] != null) {
-          this.socketTest = io(data['url']);
-          this.socketTest.on('connect', () => {
-            this.hideSpinner()
-            // this.blockUI.stop();
-            this.redirectSeconds && clearInterval(this.redirectSeconds)
-            console.log('connected'); // true
-            this.socketTest.removeAllListeners()
-            this.alert.success('Connected')
-            this.startSocket(this.socketTest)
-          })
-        }
-        else{
-          this.showSpinner('<span class="text-danger">Server Communication url error<br>Redirecting...</span>');
-          setTimeout(() => {
-            location.href = 'https://firefighteronline.herokuapp.com'
-          }, 2000);
-        }
+    // http.get<any>('/geturl')
+    //   .subscribe(data => {
+    //     console.log('got url', data);
+    //     if (data['url'] != null) {
+    //       this.socketTest = io(data['url']);
+    //       this.socketTest.on('connect', () => {
+    //         this.hideSpinner()
+    //         // this.blockUI.stop();
+    //         this.redirectSeconds && clearInterval(this.redirectSeconds)
+    //         console.log('connected'); // true
+    //         this.socketTest.removeAllListeners()
+    //         this.alert.success('Connected')
+    //         this.startSocket(this.socketTest)
+    //       })
+    //     }
+    //     else{
+    //       this.showSpinner('<span class="text-danger">Server Communication url error<br>Redirecting...</span>');
+    //       setTimeout(() => {
+    //         location.href = 'https://firefighteronline.herokuapp.com'
+    //       }, 2000);
+    //     }
+    //   })
+  }
+
+  initController() {
+    if (this.FighterSystemUrl) {
+      this.socketTest.close()
+      this.socketTest = io(this.FighterSystemUrl)
+      this.socketTest.on('connect', () => {
+        this.hideSpinner()
+        // this.blockUI.stop();
+        this.redirectSeconds && clearInterval(this.redirectSeconds)
+        console.log('connected'); // true
+        this.socketTest.removeAllListeners()
+        this.alert.success('Connected')
+        this.startSocket(this.socketTest)
       })
+    }
+    else {
+      this.showSpinner('<span class="text-danger">Server Communication url error<br>Redirecting...</span>');
+      setTimeout(() => {
+        // location.href = 'https://firefighteronline.herokuapp.com'
+      }, 2000);
+    }
   }
 
   showSpinner(message = 'Connecting...') {

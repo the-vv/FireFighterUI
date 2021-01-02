@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { ServerService } from '../server.service';
 import * as io from 'socket.io-client';
 
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'starter-component',
+  templateUrl: './starter.component.html',
+  styleUrls: ['./starter.component.scss']
 })
-export class AppComponent implements OnInit {
+export class StarterComponent implements OnInit, OnDestroy {
 
   status: string = 'Unavailable'
   url: string;
@@ -20,8 +20,7 @@ export class AppComponent implements OnInit {
     private http: HttpClient,
     public server: ServerService
   ) {
-
-    this.socket = io();
+    this.socket = io('https://firefighteronline.herokuapp.com');
 
     this.socket.on('urlAvailable', (msg: any) => {
       console.log(msg);
@@ -58,15 +57,20 @@ export class AppComponent implements OnInit {
     location.reload()
   }
 
+  ngOnDestroy() {
+    // this.socket.close()
+  }
+
   ngOnInit() {
-    this.http.get<any>('/geturl')
+    this.http.get<any>('https://firefighteronline.herokuapp.com/geturl')
       .subscribe((data) => {
         if (data) {
+          this.server.FighterSystemUrl = data.url
           if (data.url?.length) {
-            console.log(data);
-            this.server.FighterSystemUrl = data.url
+            console.log(this.server.FighterSystemUrl);
+            // this.server.FighterSystemUrl = data.url
           } else {
-            console.log(data);
+            console.log(this.server.FighterSystemUrl);
             this.available = false
           }
         }
