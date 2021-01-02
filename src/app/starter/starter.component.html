@@ -1,6 +1,15 @@
 <div class="container-fluid bg-dark">
   <div id="main" class="row d-flex justify-content-center align-content-center">
 
+    <div class="sk-chase" *ngIf="showLoading">
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+    </div>
+
     <div *ngIf="!available && status != 'Disconnected'" class="text-center">
       <img src="../assets/robo-check.png" height="200px" alt="" class="d-block">
       <div class="w-100 text-center lead mt-3 text-light">
@@ -16,7 +25,7 @@
       </div>
     </div>
 
-    <div *ngIf="server.FighterSystemUrl?.length" class="text-center">
+    <div *ngIf="server.FighterSystemUrl?.length && !showLoading" class="text-center">
       <img src="../assets/robo-done.png" height="200px" alt="" class="">
       <div class="w-100 text-center lead mt-3 text-light">
         System started and available...

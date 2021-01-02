@@ -16,6 +16,7 @@ export class StarterComponent implements OnInit, OnDestroy {
   available: boolean = true;
   socket: any
   redirected = false
+  showLoading = true;
 
   constructor(
     private http: HttpClient,
@@ -32,7 +33,7 @@ export class StarterComponent implements OnInit, OnDestroy {
     });
     this.socket.on('disconnect', () => {
       this.status = 'Disconnected';
-      if(!this.redirected) {
+      if (!this.redirected) {
         server.FighterSystemUrl = null;
       }
       this.available = false;
@@ -48,7 +49,7 @@ export class StarterComponent implements OnInit, OnDestroy {
       server.FighterSystemUrl = null;
       this.available = false;
     })
-    this.socket.on('newSession', () =>{
+    this.socket.on('newSession', () => {
       server.FighterSystemUrl = null;
       this.available = false;
       this.status = 'Disconnected';
@@ -56,7 +57,7 @@ export class StarterComponent implements OnInit, OnDestroy {
     })
   }
 
-  reload(){
+  reload() {
     location.reload()
   }
 
@@ -67,8 +68,10 @@ export class StarterComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.redirected = true
+    this.showLoading = true;
     this.http.get<any>('https://firefighteronline.herokuapp.com/geturl')
       .subscribe((data) => {
+        this.showLoading = false
         if (data) {
           this.server.FighterSystemUrl = data.url
           if (data.url?.length) {
