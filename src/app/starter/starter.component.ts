@@ -22,7 +22,7 @@ export class StarterComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     public server: ServerService
   ) {
-    this.socket = io('https://firefighteronline.herokuapp.com');
+    this.socket = io();
 
     this.socket.on('urlAvailable', (msg: any) => {
       console.log(msg);
@@ -83,6 +83,7 @@ export class StarterComponent implements OnInit, OnDestroy {
           }
         }
       }, (err) => {
+        this.showLoading = false
         console.log(err);
         this.available = false
       })

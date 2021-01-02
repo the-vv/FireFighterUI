@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import * as io from 'socket.io-client';
+import { ThrowStmt } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,11 @@ export class ServerService {
         // this.blockUI.stop();
         this.redirectSeconds && clearInterval(this.redirectSeconds)
         console.log('connected'); // true
-        this.socketTest.removeAllListeners()
+        // this.socketTest.removeAllListeners()
+        this.socketTest.removeListener('systemError');
+        this.socketTest.removeListener('terminalLog');
+        this.socketTest.removeListener('camFrame');
+        this.socketTest.removeListener('ping');
         this.alert.success('Connected')
         this.startSocket(this.socketTest)
       })
